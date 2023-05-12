@@ -4,6 +4,8 @@ import {Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
 import { Link, useParams, useNavigate} from 'react-router-dom';
 import {RxCross2} from 'react-icons/rx';
+import { ImCross } from "react-icons/im";
+
 
 const Popular = () => {
 
@@ -30,7 +32,7 @@ const Popular = () => {
 
         localStorage.setItem('popular', JSON.stringify(data));
         console.log(data)
-        setPopular(data)
+        setPopular(data.data)
         //}
     }
 
@@ -41,7 +43,7 @@ const Popular = () => {
             if(!response.ok){
                 throw new Error('Something went wrong')
             }
-            navigate('/')
+            
             // assume things went well ^ 
         }).catch((e) => {console.log(e)});
     }
@@ -61,10 +63,11 @@ const Popular = () => {
                     {popular.map((recipe) => {
                         return(
                             <SplideSlide key={recipe.id}>
-                            <DeleteButton onClick={(e) => handleDelete(recipe.id)}>
-                            <RxCross2/>
-                            </DeleteButton>
+                                
+                            
                             <Card key={recipe.id}> 
+                            
+                            
                             
                             <p key={recipe.id}>{recipe.title}</p>
                             
@@ -76,6 +79,11 @@ const Popular = () => {
                          
                             
                             </Card>
+
+                            <DeleteButton onClick={(e) => handleDelete(recipe.id)}>
+                            <RxCross2/>
+                            </DeleteButton>
+                            
                             </SplideSlide>
                         )
                     })}
@@ -91,9 +99,16 @@ const Wrapper = styled.div`margin: 4rem 0rem`
 
 const DeleteButton = styled.button`
 
-    margin: 1rem 0rem;
+    margin: 0rem 0rem;
+    border-radius: 50%;
+    background-color: #ff0019;
+    border: grey;
     
-    
+    &:hover {
+        transition: all 0.2s ease-in-out;
+        background: rgb(255,117,10);
+        color: #010606;
+    }
     `
     
 const Card = styled.div`

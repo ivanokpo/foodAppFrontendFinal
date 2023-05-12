@@ -10,19 +10,19 @@ import React from 'react'
 function Category() {
   return (
     <List>
-        <SLink to={'/category/soup'}>
+        <SLink to={'/recipes/category/soup'}>
             <TbSoup/>
             <h4>Soup</h4>
         </SLink>
-        <SLink to={'/category/american'}>
+        <SLink to={'/recipes/category/american'}>
             <FaHamburger/>
             <h4>Burgers</h4>
         </SLink>
-        <SLink to={'/category/noodles'}>
+        <SLink to={'/recipes/category/noodles'}>
             <GiNoodles/>
             <h4>Noodles</h4>
         </SLink >
-        <SLink to={'/category/rice'}>
+        <SLink to={'/recipes/category/rice'}>
             <GiBowlOfRice/>
             <h4>Rice</h4>
         </SLink>

@@ -7,12 +7,12 @@ function Searched() {
 
     const [searchedRecipes, setSearchedRecipes] = useState([]);
     let params = useParams();
-
+    const backendUrl = 'http://localhost:3001/recipes/searched'
     const getSearched = async () => {
-        const data = await fetch(`http://localhost:3001/recipes/searched/${params.search}`)
+        const data = await fetch(`${backendUrl}/${params.search}`)
         const recipes = await data.json();
-        setSearchedRecipes(recipes);
-        console.log(recipes);
+        setSearchedRecipes(recipes.data);
+        console.log(recipes.data);
     }
 
     useEffect(() => {
@@ -25,8 +25,7 @@ function Searched() {
             return(
                 <Card key={item.id}>
                     <Link to={'/recipes/'+ item.id}>
-                    <img src={item.image} alt="" width="200" 
-     height="auto"/>
+                    <img src={item.image} alt="" width="200" height="auto"/>
                     <h4>{item.title}</h4>
                     {/* <p key={item.ingredients.id}>{item.ingredients}</p> */}
                     </Link>

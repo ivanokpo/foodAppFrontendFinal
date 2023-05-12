@@ -9,13 +9,15 @@ function DishType() {
 
     const [cuisine, setCuisine] = useState([]);
     let params = useParams();
-    const baseUrl = 'http://localhost:3001/recipes/dishType'
+    const backendUrl = 'http://localhost:3001/recipes/category'
 
     const getCuisine = async () => {
-        const data = await fetch(`${baseUrl}/${params.type}`)
+        const data = await fetch(`${backendUrl}/${params.dishType}`)
+        console.log(data)
         const recipes = await data.json();
-        console.log(recipes)
-        setCuisine(recipes);
+        
+        //localStorage.setItem('cuisine', JSON.stringify(recipes));
+        setCuisine(recipes.data);
     }
 
     useEffect(() => {

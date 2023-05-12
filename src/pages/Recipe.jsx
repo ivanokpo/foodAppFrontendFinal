@@ -14,7 +14,7 @@ function Recipe() {
     const detailData = await data.json();
     
    
-    setDetails(detailData)
+    setDetails(detailData.data)
     //console.log(detailData)
 
   };
@@ -28,14 +28,10 @@ function Recipe() {
   
   return (
     <div>
-     
-
-    
-        
       <DetailWrapper>
       <div>
       <h2>{details.title}</h2>
-      <img src={details.image} alt="" width="400" 
+      <img src={details.image} alt="" width="350" 
      height="auto"/>
       </div>
       <Info>
@@ -43,17 +39,33 @@ function Recipe() {
         <Button className={activeTab === "ingredients" ? "active" : ""} onClick={()=> setActiveTab("ingredients")}>Ingredients</Button>
         {activeTab === "instructions" && (
           <div>
-          <h3 dangerouslySetInnerHTML={{__html: details.instructions}}></h3>
-          <h3 dangerouslySetInnerHTML={{__html: details.instructions}}></h3>
+          
+          <p>{JSON.stringify(details.instructions)}</p>
+          <br/>
+          <Button className={activeTab === "instructions" ? "active" : ""} onClick={()=> setActiveTab("instructions")}>Edit</Button>
+          {/* on click make the p turn into the input below, 
+          then a submit button which sends the changed information to backend in PUT method, 
+          it will need the id of object to change 
+          use same method from the instructions/ingredients button as edit/save
+          edit = <input>
+          save = <p> & send info to PUT method
+          */}
+          {/* <input type="text" value={JSON.stringify(details.instructions)}/> */}
+         
 
         </div>
         ) }
         {activeTab === "ingredients" && (
-          <ul>
-          {details.ingredients.map((ingredient) => 
-            <li >{ingredient}</li>
-          )}
-        </ul>
+          <div>
+          {details.ingredients.map((ingredient)=> {
+            return <p key={ingredient.id}>- {ingredient.name}</p>
+            
+          })}
+          {console.log(details.ingredients)}
+
+          
+          
+          </div>
         )}
         
       </Info>
@@ -65,7 +77,7 @@ function Recipe() {
 }
 
 const DetailWrapper = styled.div`
-margin-top: 10rem;
+margin-top: 1rem;
 margin-bottom: 5rem;
 display: flex;
 .active{
@@ -96,5 +108,8 @@ const Button = styled.button`
 
 const Info = styled.div`
 margin-left: 10rem;
+div {
+  margin-top: 2rem;
+}
 `
 export default Recipe

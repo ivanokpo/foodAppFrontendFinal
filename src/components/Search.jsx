@@ -18,29 +18,32 @@ function Search() {
 
   return (
     <FormStyle onSubmit={submitHandler}>
-        <div>
+        <Border>
             <FaSearch></FaSearch>
             <input onChange={(e) => setInput(e.target.value)} 
             type="text" 
             value={input}
             />
-        </div>
+        </Border>
             
     </FormStyle>
   )
 }
 
+const Border = styled.div`
+    display: flex;
+    justify-content: center;
+    
+    margin: 3rem 10rem;
+`
+
 const FormStyle = styled.form`
     margin: 0rem 0rem;
-    position: absolute;
-    width: 60%;
+    position: relative;
+    bottom: 1px;
+    width: 100%;
     justify-content: center;
-    div {
-        width: 100%;
-        position: absolute;
-        top: 50%;
-    }
-
+    
     input {
         border: none;
         background: linear-gradient(35deg, #494949, #313131);
