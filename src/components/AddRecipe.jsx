@@ -65,9 +65,7 @@ function AddRecipe() {
         <input type="text" name="ingredients" placeholder="Ingredients" value={ingredients} onChange={e => setIngredients(e.target.value)}></input>
         </div>
 
-        <div> 
-        <input type="text" name="imageLink" placeholder="Image Link" value={imageLink} onChange={e => setImageLink(e.target.value)}></input>
-        </div>
+        
 
         <button type="button" onClick={handleSubmit}>+</button>
       </div>

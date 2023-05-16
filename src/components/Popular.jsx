@@ -51,7 +51,7 @@ const Popular = () => {
   return (
     <div>
                 <Wrapper >
-                    <h3>Chef's Picks</h3>
+                    <h3>Saved Recipes</h3>
 
                     <Splide options={{
                         perPage: 4,
