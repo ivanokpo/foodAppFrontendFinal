@@ -47,7 +47,6 @@ function AddRecipe() {
       
 
       <div>
-        {/* title input field */}
         
         <div> 
         <input type="text" name="title" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)}></input>
@@ -67,14 +66,14 @@ function AddRecipe() {
 
         
 
-        <button type="button" onClick={handleSubmit}>+</button>
+        <button type="button" onClick={handleSubmit}>Save</button>
       </div>
 
     </FormStyle>
   )
 }
 const FormStyle = styled.form`
-    margin: 2rem 2rem;
+    margin: 0rem 2rem;
     position: relative;
     width: 100%;
     justify-content: center;
@@ -86,7 +85,7 @@ const FormStyle = styled.form`
       
   }
     h1 {
-      color: rgb(255,117,10);
+      color: rgb(83,83,83);
       font-size: 3rem;
     }
     p {
@@ -98,37 +97,55 @@ const FormStyle = styled.form`
     input {
    
       background: linear-gradient(70deg, #DEDEDE, #A4A4A4);
-      font-size: 1.5rem;
-      
+      font-size: 1.5rem;   
       padding: 1rem 0.7rem;
-     
       border-style: none none none solid;
-      border-radius: 1rem;
-      border-color: rgb(255,117,10);
-      border-width: 1rem;
-      
-      
+      border: 2px solid black;
+      border-color: rgb(83,83,83);
+      border-radius: 1.5rem;
+     
       width: 100%;
+
+     
+      color: #313131;
+      background: light-grey;
+      
+      font-weight: 600;
+    
+      resize: none;
+      white-space: pre;
+      overflow-wrap: break-word;
+      
       
       
   }
 
   button {
-    background: linear-gradient(70deg, #DEDEDE, #A4A4A4);
-    display: flex;
-    justify-content: inherit;
-    font-size: 1.5rem;
-    color: rgb(255,117,10);
-    text-align: center;
-    padding: 0rem 4rem;
+    background: green;
+    font-size: 1rem;   
+    padding: 1rem 0.7rem;
+    border-style: none none none none;
     
-    border-style: solid;
+    
+    margin-left: 5.5rem;
     border-radius: 1rem;
-    border-color: green;
-    border-width: 0.2rem;
-    margin: 0rem 1rem;
+    margin-top: 0.5rem;
+
+   
+    color: white;
     
-    width: 40%;
+    
+    font-weight: 600;
+  
+    resize: none;
+    white-space: pre;
+    overflow-wrap: break-word;
+    width: 20%;
+  }
+
+  button:active{
+    background: linear-gradient(35deg, #494949, #313131);
+    color: white;
   }
    
 `

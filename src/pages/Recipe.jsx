@@ -63,10 +63,13 @@ function Recipe() {
   
   return (
     <div>
-      <DetailWrapper>
-      <div>
+      <Header>
       <h2>{details.title}</h2>
-      <img src={details.image} alt="" width="350" height="auto"/>
+      </Header>
+      <DetailWrapper>
+     <div>
+      
+      <img src={details.image} alt="" width="450" height="auto"/>
       </div>
       <Info>
         <Button className={activeTab === "instructions" ? "active" : ""} onClick={()=> setActiveTab("instructions")}>Instructions</Button>
@@ -74,12 +77,12 @@ function Recipe() {
         {
         activeTab === "instructions" && editTab === "save" ? (
           <div>     
-          <p>{details.instructions}</p>
+          <span>{details.instructions}</span>
         </div>
         ) : activeTab === "instructions" && editTab === "edit" ? (
         <>
         
-        <div>
+        <div className="textArea">
         <textarea type="text" value={instructions} placeholder={details.instructions} maxLength= "2000" onChange={e => setInstructions(e.target.value)}></textarea>
        </div>
         
@@ -89,7 +92,7 @@ function Recipe() {
         activeTab === "ingredients" && editTab === "save" ? (
           
           <div>
-          <p>{details.ingredients}</p>
+          <span>{details.ingredients}</span>
           {/* {details.ingredients.map((ingredient)=> {
             return <p key={ingredient.id}>- {ingredient.name}</p>
             
@@ -101,22 +104,15 @@ function Recipe() {
           </div>
         ) : activeTab === "ingredients" && editTab === "edit" ? (
           
-          <div>
+          <div className="textArea">
             <textarea type="text" value={ingredients} placeholder={details.ingredients} maxLength= "2000" onChange={e => setIngredients(e.target.value)}></textarea>
-            
-        {/* <form>
-       
-          {details.ingredients.map((ingredient)=> {
-          return <input type="text" value={ingredient.name} />
-        })}
-        
-        </form> */}
-      
         </div>
         ) : (console.log("hi fe"))}
         <br/>
-        <Button className={editTab === "edit" ? "active" : ""} onClick={()=> setEditTab("edit")}>Edit</Button>
-        <Button className={editTab === "save" ? "active" : ""} onClick={()=> onSubmit()}>Save</Button>
+        
+        <UpdateButtons  onClick={()=> setEditTab("edit")}>Edit</UpdateButtons>
+        <UpdateButtons  onClick={()=> onSubmit()}>Save</UpdateButtons>
+        
         
       </Info>
     </DetailWrapper>
@@ -126,16 +122,33 @@ function Recipe() {
   )
 }
 
-const DetailWrapper = styled.div`
-margin-top: 1rem;
+const Header = styled.div`
+display: grid;
+justify-content: center;
 margin-bottom: 5rem;
+`
+
+const DetailWrapper = styled.div`
+margin-top: 3rem;
+margin-left: 8rem;
+
 display: flex;
+
+justify-content: center;
+
 .active{
   background: linear-gradient(35deg, #494949, #313131);
   color: white;
 }
+
 h2{
-  margin-bottom: 2rem;
+ 
+  text-align: left;
+  font-size: 30px; 
+}
+
+img {
+  border-radius: 1.5rem;
 }
 li {
   font-size: 1.2rem;
@@ -145,18 +158,34 @@ ul {
   margin-top: 2rem;
 }
 
+button:active{
+  background: linear-gradient(35deg, #494949, #313131);
+  color: white;
+}
+
+
 textarea {
   padding: 1rem 2rem;
   color: #313131;
   background: white;
   border: 2px solid black;
-  margin-right: 2rem;
+  border-radius: 1.5rem;
   font-weight: 600;
-  width: 300px;
-  height: 150px;
+  width: 380px;
+  height: 250px;
   resize: none;
+  white-space: pre;
+overflow-wrap: break-word;
   
 }
+
+
+span {
+  white-space: pre-wrap; 
+  overflow-wrap: break-word; 
+}
+
+
 `;
 
 const Button = styled.button`
@@ -164,75 +193,42 @@ const Button = styled.button`
   color: #313131;
   background: white;
   border: 2px solid black;
-  margin-right: 2rem;
+  justify-content: center;
+  margin-right: 0.7rem;
+  border-radius: 1.5rem;
+ 
   font-weight: 600;
+  font-size: 20px;
+  
+  
+  
 
+`
+const UpdateButtons = styled.button`
+  padding: 1rem 2rem;
+  color: #313131;
+  background: white;
+  border: 2px solid black;
+  display: inline;
+  border-radius: 1.5rem;
+  font-weight: 600;
+  font-size: 20px;
+  margin-right: 10rem;
 `
 
 const Info = styled.div`
+margin-top: 0rem;
 margin-left: 10rem;
+justify-content: center;
+
 div {
   margin-top: 2rem;
+  
+  
 }
+
+
 `
 
-// const FormStyle = styled.form`
-//     margin: 2rem 2rem;
-//     position: relative;
-//     width: 100%;
-//     justify-content: center;
 
-//     div {
-//       width: 50%;
-//       position: relative;
-//       padding: 0.5rem 0rem;
-      
-//   }
-//     h1 {
-//       color: rgb(255,117,10);
-//       font-size: 3rem;
-//     }
-//     p {
-//       font-size: 1rem;
-//       padding: 0.5rem 0rem;
-      
-//     }
-    
-//     input {
-   
-//       background: linear-gradient(70deg, #DEDEDE, #A4A4A4);
-//       font-size: 1.5rem;
-      
-//       padding: 1rem 0.7rem;
-     
-//       border-style: none none none solid;
-//       border-radius: 1rem;
-//       border-color: rgb(255,117,10);
-//       border-width: 1rem;
-      
-      
-//       width: 100%;
-      
-      
-//   }
-
-//   button {
-//     background: linear-gradient(70deg, #DEDEDE, #A4A4A4);
-//     display: flex;
-//     justify-content: inherit;
-//     font-size: 1.5rem;
-//     color: rgb(255,117,10);
-//     text-align: center;
-//     padding: 0rem 4rem;
-    
-//     border-style: solid;
-//     border-radius: 1rem;
-//     border-color: green;
-//     border-width: 0.2rem;
-//     margin: 0rem 1rem;
-    
-//     width: 40%;
-//   }
-   
-// `
 export default Recipe

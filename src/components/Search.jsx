@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {FaSearch } from 'react-icons/fa';
 import {useNavigate} from 'react-router-dom';
 
@@ -13,8 +13,12 @@ function Search() {
     const submitHandler = (e) => {
         e.preventDefault();
         navigate( baseUrl + input);
+        setInput("")
         
     };
+
+   
+    
 
   return (
     <FormStyle onSubmit={submitHandler}>

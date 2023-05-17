@@ -81,7 +81,9 @@ const Popular = () => {
                             </Card>
 
                             <DeleteButton onClick={(e) => handleDelete(recipe.id)}>
-                            <RxCross2/>
+                            <div>
+                            
+                            </div>
                             </DeleteButton>
                             
                             </SplideSlide>
@@ -100,7 +102,8 @@ const Wrapper = styled.div`margin: 4rem 0rem`
 const DeleteButton = styled.button`
 
     margin: 0rem 0rem;
-    border-radius: 50%;
+    
+    border-radius: 30%;
     background-color: #ff0019;
     border: grey;
     
@@ -108,6 +111,13 @@ const DeleteButton = styled.button`
         transition: all 0.2s ease-in-out;
         background: rgb(255,117,10);
         color: #010606;
+    }
+
+    div {
+        margin-top: 0rem;
+        width: 0.7rem;
+        height: 0.7rem;
+        
     }
     `
     

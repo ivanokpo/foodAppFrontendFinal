@@ -14,11 +14,11 @@ export const Nav= styled.nav`
 `
 
 export const NavLink = styled(Link)`
-    color: #fff;
+    color: white;
     display: flex;
     align-items: center;
     text-dectoration: none;
-    padding: 0 1rem;
+    padding: 0 5rem;
     height: 100%;
     cursor: pointer;
 
