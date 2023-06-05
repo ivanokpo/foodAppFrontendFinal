@@ -1,45 +1,66 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef} from 'react'
 import styled from 'styled-components';
 import {Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
-import { Link, useParams, useNavigate} from 'react-router-dom';
-import {RxCross2} from 'react-icons/rx';
-import { ImCross } from "react-icons/im";
+import { Link} from 'react-router-dom';
+
 
 
 const Popular = () => {
 
-    const [popular, setPopular]= useState([]);
-    const baseUrl = 'http://localhost:3001/recipes';
-    const navigate = useNavigate();
+    const effectRan = useRef(false)
+    const [popular, setPopular]= useState<DataObject | undefined[]>([]);
+    const baseUrl = 'http://localhost:3001/recipes';  
+    type DataObject = {
+        id: string
+        title: string
+        image: string
+
+    }[]
 
     useEffect(() => {
-        getPopular();
+       
+        if (!effectRan.current){
+            const getPopular = async ()  => {
+                const api = await fetch(`${baseUrl}/all`);
+                const data = await api.json();
+                localStorage.setItem('popular', JSON.stringify(data));
+                console.log(data.data);
+                setPopular(data.data);
+                
+                }
+            getPopular()
+            console.log("mount")
+        }
+
+        return () => {
+          
+            localStorage.clear()
+                
+                setPopular([]);
+        }
+        
     }, [])
 
 
-    const getPopular = async () => {
+    // const getPopular = async ()  => {
 
-        // const check = localStorage.getItem('popular');
-        // if (check){
-        //     setPopular(JSON.parse(check));
-        // } else {
-            
         
-        const api = await fetch(`${baseUrl}/all`);
         
-        const data = await api.json();
+    //     const api = await fetch(`${baseUrl}/all`);
+        
+    //     const data = await api.json();
 
-        localStorage.setItem('popular', JSON.stringify(data));
-        console.log(data)
-        setPopular(data.data)
-        //}
-    }
+    //     localStorage.setItem('popular', JSON.stringify(data));
+    //     console.log(data.data);
+    //     setPopular(data.data);
+        
+    // }
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (id: string | undefined) => {
         console.log("delete");
         const url = `${baseUrl}/delete/${id}`
-        const fetchDelete = fetch(url, {method: 'DELETE'}).then((response) => {
+        fetch(url, {method: 'DELETE'}).then((response) => {
             if(!response.ok){
                 throw new Error('Something went wrong')
             }
@@ -62,17 +83,17 @@ const Popular = () => {
                     }}>
                     {popular.map((recipe) => {
                         return(
-                            <SplideSlide key={recipe.id}>
+                            <SplideSlide key={recipe?.id}>
                                 
                             
-                            <Card key={recipe.id}> 
+                            <Card key={recipe?.id}> 
                             
                             
                             
-                            <p key={recipe.id}>{recipe.title}</p>
+                            <p key={recipe?.id}>{recipe?.title}</p>
                             
-                            <img src={recipe.image}  alt={recipe.title} width="200" height="auto"/>
-                            <Link to={'/recipes/' + recipe.id}>
+                            <img src={recipe?.image}  alt={recipe?.title} width="200" height="auto"/>
+                            <Link to={'/recipes/' + recipe?.id}>
                                 
                                 <Gradient/> 
                             </Link>
@@ -80,7 +101,7 @@ const Popular = () => {
                             
                             </Card>
 
-                            <DeleteButton onClick={(e) => handleDelete(recipe.id)}>
+                            <DeleteButton onClick={() => handleDelete(recipe?.id)}>
                             <div>
                             
                             </div>

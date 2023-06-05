@@ -1,28 +1,20 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import {NavLink} from 'react-router-dom';
-import axios from 'axios';
+
 
 function AddRecipe() {
 
-  const [title, setTitle] = useState("");
-  const [dishType, setDishType] = useState("");
-  const [instructions, setInstructions] = useState("");
-  const [ingredients, setIngredients] = useState("");
-  const [imageLink, setImageLink] = useState("");
+  const [title, setTitle] = useState<string | null>("");
+  const [dishType, setDishType] = useState<string | null>("");
+  const [instructions, setInstructions] = useState<string | null>("");
+  const [ingredients, setIngredients] = useState<string | null>("");
+  
   const baseUrl = 'http://localhost:3001/recipes';
-  const recipe = {title, dishType, instructions, ingredients, imageLink}
+  const recipe = {title, dishType, instructions, ingredients}
 
-  const options = {
-    method: 'POST',
-    body: JSON.stringify(recipe),
-    headers: {
-      'Content-Type': 'application/json',
-      
-    }
-  }
+  
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (/*e*/) => {
     
     
     //e.preventDefault();
@@ -49,19 +41,19 @@ function AddRecipe() {
       <div>
         
         <div> 
-        <input type="text" name="title" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)}></input>
+        <input type="text" name="title" placeholder="Title" value={title!} onChange={e => setTitle(e.target.value)}></input>
         </div>
 
         <div > 
-        <input type="text" name="dishType" placeholder="Dish Type" value={dishType} onChange={e => setDishType(e.target.value)}></input>
+        <input type="text" name="dishType" placeholder="Dish Type" value={dishType!} onChange={e => setDishType(e.target.value)}></input>
         </div>
 
         <div > 
-        <input type="text" name="instructions" placeholder="Instructions"  value={instructions} onChange={e => setInstructions(e.target.value)}></input>
+        <input type="text" name="instructions" placeholder="Instructions"  value={instructions!} onChange={e => setInstructions(e.target.value)}></input>
         </div>
 
         <div> 
-        <input type="text" name="ingredients" placeholder="Ingredients" value={ingredients} onChange={e => setIngredients(e.target.value)}></input>
+        <input type="text" name="ingredients" placeholder="Ingredients" value={ingredients!} onChange={e => setIngredients(e.target.value)}></input>
         </div>
 
         

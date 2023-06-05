@@ -1,5 +1,5 @@
 import React from 'react'
-import { Nav, NavLink, Bars, NavMenu, NavBtn, NavBtnLink} from './NavbarElements'
+import { Nav, NavLink} from './NavbarElements.js'
 import {GiCook} from 'react-icons/gi'
 function Navbar() {
   return (
@@ -9,10 +9,10 @@ function Navbar() {
                 <GiCook size={88}/>  Home
             </NavLink>
             
-                <NavLink to="/cookbook" activeStyle>
+                <NavLink to="/cookbook" >
                     Cookbook
                 </NavLink>
-                <NavLink to="/category" activeStyle>
+                <NavLink to="/category" >
                     Category
                 </NavLink>
                 

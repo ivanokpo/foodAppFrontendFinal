@@ -4,8 +4,18 @@ import {Link, useParams} from 'react-router-dom';
 import styled from 'styled-components'
 
 function Searched() {
+    type DataObject = {
+        id: string
+        title: string
+        image: string
+        instructions: string
+        ingredients: string
+    
+    }[]
 
-    const [searchedRecipes, setSearchedRecipes] = useState([]);
+    
+      
+    const [searchedRecipes, setSearchedRecipes] = useState<DataObject | undefined[]>([]);
     let params = useParams();
     const backendUrl = 'http://localhost:3001/recipes/searched'
     const getSearched = async () => {
@@ -16,17 +26,18 @@ function Searched() {
     }
 
     useEffect(() => {
-        getSearched(params.search);
-    }, [params.search]);
+        getSearched();
+        //params.search
+    });
 
   return (
     <Grid>
         {searchedRecipes.map((item) => {
             return(
-                <Card key={item.id}>
-                    <Link to={'/recipes/'+ item.id}>
-                    <img src={item.image} alt="" width="200" height="auto"/>
-                    <h4>{item.title}</h4>
+                <Card key={item?.id}>
+                    <Link to={'/recipes/'+ item?.id}>
+                    <img src={item?.image} alt="" width="200" height="auto"/>
+                    <h4>{item?.title}</h4>
                     {/* <p key={item.ingredients.id}>{item.ingredients}</p> */}
                     </Link>
                 </Card>

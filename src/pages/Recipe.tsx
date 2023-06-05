@@ -4,18 +4,23 @@ import { useParams } from 'react-router-dom';
 
 import React from 'react'
 
-function Recipe() {
+const Recipe=() =>{
+
+  
+
+
   let params = useParams();
-  const [details, setDetails] = useState([]);
-  const [activeTab, setActiveTab] = useState('instructions');
-  const [editTab, setEditTab] = useState('save');
-  const [instructions, setInstructions] = useState("");
-  const [ingredients, setIngredients] = useState("");
-  const [id, setId] = useState()
-  const [recipeObject, setRecipeObject] = useState("");
-  const recipe = {instructions, id}
+  const [details, setDetails] = useState<any>([]);
+  const [activeTab, setActiveTab] = useState<string>('instructions');
+  const [editTab, setEditTab] = useState<string>('save');
+  const [instructions, setInstructions] = useState<string | null>("");
+  const [ingredients, setIngredients] = useState<string | null>("");
+
+
 
   const baseUrl = 'http://localhost:3001/recipes';
+
+ 
 
   const fetchDetails = async () => {
     const data = await fetch(`http://localhost:3001/recipes/${params.id}`)
@@ -33,7 +38,7 @@ function Recipe() {
     fetchDetails();
   }, [params.id])
 
-  const onSubmit = (recipeObject) => {
+  const onSubmit = () => {
     setEditTab("save");
    // setId(params.id);
 
@@ -71,7 +76,7 @@ function Recipe() {
       
       <img src={details.image} alt="" width="450" height="auto"/>
       </div>
-      <Info>
+      <Info >
         <Button className={activeTab === "instructions" ? "active" : ""} onClick={()=> setActiveTab("instructions")}>Instructions</Button>
         <Button className={activeTab === "ingredients" ? "active" : ""} onClick={()=> setActiveTab("ingredients")}>Ingredients</Button>
         {
@@ -83,7 +88,7 @@ function Recipe() {
         <>
         
         <div className="textArea">
-        <textarea type="text" value={instructions} placeholder={details.instructions} maxLength= "2000" onChange={e => setInstructions(e.target.value)}></textarea>
+        <textarea data-type='text' value={instructions!} placeholder={details.instructions} maxLength= {2000} onChange={e => setInstructions(e.target.value)}></textarea>
        </div>
         
         </>
@@ -92,6 +97,7 @@ function Recipe() {
         activeTab === "ingredients" && editTab === "save" ? (
           
           <div>
+            <>
           <span>{details.ingredients}</span>
           {/* {details.ingredients.map((ingredient)=> {
             return <p key={ingredient.id}>- {ingredient.name}</p>
@@ -100,12 +106,12 @@ function Recipe() {
           {console.log(details.ingredients)}
           
           
-        
+            </>
           </div>
         ) : activeTab === "ingredients" && editTab === "edit" ? (
           
           <div className="textArea">
-            <textarea type="text" value={ingredients} placeholder={details.ingredients} maxLength= "2000" onChange={e => setIngredients(e.target.value)}></textarea>
+            <textarea data-type="text" value={ingredients!} placeholder={details.ingredients} maxLength= {2000} onChange={e => setIngredients(e.target.value)}></textarea>
         </div>
         ) : (console.log("hi fe"))}
         <br/>
@@ -122,13 +128,13 @@ function Recipe() {
   )
 }
 
-const Header = styled.div`
+const Header : any = styled.div`
 display: grid;
 justify-content: center;
 margin-bottom: 5rem;
 `
 
-const DetailWrapper = styled.div`
+const DetailWrapper : any = styled.div`
 margin-top: 3rem;
 margin-left: 8rem;
 
@@ -188,7 +194,7 @@ span {
 
 `;
 
-const Button = styled.button`
+const Button : any = styled.button`
   padding: 1rem 2rem;
   color: #313131;
   background: white;
@@ -204,7 +210,7 @@ const Button = styled.button`
   
 
 `
-const UpdateButtons = styled.button`
+const UpdateButtons : any = styled.button`
   padding: 1rem 2rem;
   color: #313131;
   background: white;
@@ -216,7 +222,7 @@ const UpdateButtons = styled.button`
   margin-right: 10rem;
 `
 
-const Info = styled.div`
+const Info : any = styled.div`
 margin-top: 0rem;
 margin-left: 10rem;
 justify-content: center;
@@ -231,4 +237,4 @@ div {
 `
 
 
-export default Recipe
+export default Recipe 

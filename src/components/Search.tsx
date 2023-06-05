@@ -1,16 +1,16 @@
 import React from 'react'
 import styled from 'styled-components';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {FaSearch } from 'react-icons/fa';
 import {useNavigate} from 'react-router-dom';
 
 function Search() {
 
-    const [input, setInput] = useState("");
+    const [input, setInput] = useState<string | null>("");
     const navigate = useNavigate();
     const baseUrl = '/recipes/searched/';
    
-    const submitHandler = (e) => {
+    const submitHandler = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         navigate( baseUrl + input);
         setInput("")
@@ -26,7 +26,7 @@ function Search() {
             <FaSearch></FaSearch>
             <input onChange={(e) => setInput(e.target.value)} 
             type="text" 
-            value={input}
+            value={input!}
             />
         </Border>
             

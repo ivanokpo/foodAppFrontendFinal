@@ -1,4 +1,3 @@
-import Veggie from "../components/Veggie.jsx";
 import Popular from "../components/Popular";
 import {motion} from 'framer-motion';
 

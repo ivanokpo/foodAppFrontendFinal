@@ -6,8 +6,13 @@ import {Link, useParams} from 'react-router-dom'
 
 
 function DishType() {
+    type DataObject = {
+        id: string
+        title: string
+        image: string
 
-    const [cuisine, setCuisine] = useState([]);
+    }[]
+    const [cuisine, setCuisine] = useState<DataObject | undefined[]>([]);
     let params = useParams();
     const backendUrl = 'http://localhost:3001/recipes/category'
 
@@ -29,10 +34,10 @@ function DishType() {
       <Grid>
       {cuisine.map( (dish) => {
           return(
-            <Card key={dish.id}>
-            <Link to={'/recipes/'+ dish.id}>
-            <img src={dish.image} alt="" width="200" height="auto"/>
-            <h4>{dish.title}</h4>
+            <Card key={dish?.id}>
+            <Link to={'/recipes/'+ dish?.id}>
+            <img src={dish?.image} alt="" width="200" height="auto"/>
+            <h4>{dish?.title}</h4>
             
             </Link>
         </Card>
