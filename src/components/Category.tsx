@@ -3,6 +3,8 @@ import {FaHamburger} from 'react-icons/fa'
 import {GiNoodles, GiBowlOfRice} from 'react-icons/gi';
 import styled from 'styled-components';
 import {NavLink} from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {  faBowlRice, faCheese } from '@fortawesome/free-solid-svg-icons'
 
 
 import React from 'react'
@@ -14,7 +16,7 @@ function Category() {
             <TbSoup/>
             <h4>Soup</h4>
         </SLink>
-        <SLink to={'/recipes/category/american'}>
+        <SLink to={'/recipes/category/burgers'}>
             <FaHamburger/>
             <h4>Burgers</h4>
         </SLink>
@@ -23,8 +25,16 @@ function Category() {
             <h4>Noodles</h4>
         </SLink >
         <SLink to={'/recipes/category/rice'}>
-            <GiBowlOfRice/>
+        <FontAwesomeIcon icon={faBowlRice} />
             <h4>Rice</h4>
+        </SLink>
+        <SLink to={'/recipes/category/pasta'}>
+            <GiBowlOfRice/>
+            <h4>Pasta</h4>
+        </SLink>
+        <SLink to={'/recipes/category/baked'}>
+        <FontAwesomeIcon icon={faCheese} />
+            <h4>Baked</h4>
         </SLink>
     </List>
   )

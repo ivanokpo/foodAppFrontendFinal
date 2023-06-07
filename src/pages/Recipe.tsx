@@ -70,6 +70,7 @@ const Recipe=() =>{
     <div>
       <Header>
       <h2>{details.title}</h2>
+      <p>{details.dishType}</p>
       </Header>
       <DetailWrapper>
      <div>
@@ -132,6 +133,10 @@ const Header : any = styled.div`
 display: grid;
 justify-content: center;
 margin-bottom: 5rem;
+p {
+  text-align: center;
+  color: grey;
+}
 `
 
 const DetailWrapper : any = styled.div`

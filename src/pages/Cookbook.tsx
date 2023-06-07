@@ -3,7 +3,7 @@ import AddRecipe from '../components/AddRecipe'
 
 const Cookbook = () => {
   return (
-      
+    
     <AddRecipe/>
   )
 }

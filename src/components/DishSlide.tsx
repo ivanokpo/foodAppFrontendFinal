@@ -4,6 +4,7 @@ import {Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
 import { Link} from 'react-router-dom';
 
+ 
 
 
 const Popular = () => {
@@ -41,21 +42,6 @@ const Popular = () => {
         }
         
     }, [])
-
-
-    // const getPopular = async ()  => {
-
-        
-        
-    //     const api = await fetch(`${baseUrl}/all`);
-        
-    //     const data = await api.json();
-
-    //     localStorage.setItem('popular', JSON.stringify(data));
-    //     console.log(data.data);
-    //     setPopular(data.data);
-        
-    // }
 
     const handleDelete = async (id: string | undefined) => {
         console.log("delete");

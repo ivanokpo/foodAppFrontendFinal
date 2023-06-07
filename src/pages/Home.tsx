@@ -1,4 +1,4 @@
-import Popular from "../components/Popular";
+import Popular from "../components/DishSlide";
 import {motion} from 'framer-motion';
 
 import React from 'react'

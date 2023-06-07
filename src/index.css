@@ -36,3 +36,11 @@ h3 {
 a{
   color: rgb(56,56,56);
 }
+
+label { 
+  font-size:200px;
+}
+
+.ant-form-item-label label{
+  font-size: 200px;
+}

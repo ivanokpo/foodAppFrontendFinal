@@ -17,6 +17,7 @@ function Searched() {
       
     const [searchedRecipes, setSearchedRecipes] = useState<DataObject | undefined[]>([]);
     let params = useParams();
+    
     const backendUrl = 'http://localhost:3001/recipes/searched'
     const getSearched = async () => {
         const data = await fetch(`${backendUrl}/${params.search}`)
