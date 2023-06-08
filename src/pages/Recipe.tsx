@@ -1,67 +1,97 @@
 import {useEffect, useState } from "react";
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
+import { Button, Tabs } from 'antd';
+import type { TabsProps } from 'antd';
 
 import React from 'react'
 
-const Recipe=() =>{
-
-  
-
-
+//method used to gather data on recipe and display data
+const Recipe = ({backendUrl}: {backendUrl: any}) =>{
+  //access to parameters of current url
   let params = useParams();
+  
+  //state for data recieved from backend
   const [details, setDetails] = useState<any>([]);
-  const [activeTab, setActiveTab] = useState<string>('instructions');
+
+  //state which captures what tab is currently selected between instructions/ingredients
+  //const [activeTab, setActiveTab] = useState<string>('instructions');
+
+  //state which captues what tab is currently selected between
   const [editTab, setEditTab] = useState<string>('save');
+
+  //state for the instructions and ingredients data
   const [instructions, setInstructions] = useState<string | null>("");
   const [ingredients, setIngredients] = useState<string | null>("");
 
+  //each tabs data is defined here
+  const items: TabsProps['items'] = [
+    {
+      key: '1',
+      label: `Instructions`,
+      children: `${details.instructions}`,
+    },
+    {
+      key: '2',
+      label: `Ingredients`,
+      children: `${details.ingredients}`,
+    }
+  ];
 
 
-  const baseUrl = 'http://localhost:3001/recipes';
+  //state for selected tab
+  const [activeKey, setActiveKey] = useState(items[0].key)
 
- 
-
+  //fetch method which sends a get request for the details of a recipe based on its id
   const fetchDetails = async () => {
-    const data = await fetch(`http://localhost:3001/recipes/${params.id}`)
+    const data = await fetch(backendUrl + `\\` + params.id)
     const detailData = await data.json();
-    
-   
     setDetails(detailData.data)
-    //console.log(detailData)
-
   };
 
-  console.log(details)
+  const onChange = (newActiveKey: string) => {
+    console.log(`tab: `+ newActiveKey)
+    setActiveKey(newActiveKey);
+  };
 
+  //calls the fetchDetails() method on render of the component
   useEffect( () => {
     fetchDetails();
-  }, [params.id])
+  
+  }, [])
 
+  //called when either the edit or save tab is clicked
   const onSubmit = () => {
+    
     setEditTab("save");
-   // setId(params.id);
 
-   if (activeTab === "instructions"){
-    details.instructions = instructions
-    console.log(details)
-    //console.log("instructions: " + instructions)
-    fetch(baseUrl + '/update/' + params.id, {
-      method: "PUT",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(details)
-    }).then(() => {console.log(JSON.stringify(instructions).slice(1,-1))})
+    //if statement where based on the state of the active tab, 
+    //a put request is made to the backend in order to update the items 
+    //information 
+    if (activeKey === "1"){
+      setInstructions(instructions)
+      details.instructions = instructions
+      console.log(details)
+      fetch(backendUrl + '/update/' + params.id, {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(details)
+    })
+    .then(() => {
+        console.log('instructions: ' + JSON.stringify(instructions).slice(1,-1)
+        )})
 
-  } else if (activeTab === "ingredients"){
-
-    details.ingredients = ingredients
-    console.log(details)
-    //console.log("instructions: " + instructions)
-    fetch(baseUrl + '/update/' + params.id, {
-      method: "PUT",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(details)
-    }).then(() => {console.log(JSON.stringify(ingredients).slice(1,-1))})
+  } else if (activeKey === "2"){
+      details.ingredients = ingredients
+      console.log(details)
+      fetch(backendUrl + '/update/' + params.id, {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(details)
+    })
+    .then(() => {
+      console.log(JSON.stringify(ingredients).slice(1,-1)
+      )})
 
   }
   }
@@ -69,62 +99,62 @@ const Recipe=() =>{
   return (
     <div>
       <Header>
-      <h2>{details.title}</h2>
-      <p>{details.dishType}</p>
+        <h2>{details.title}</h2>
+        <p>{details.dishType}</p>
       </Header>
       <DetailWrapper>
-     <div>
-      
-      <img src={details.image} alt="" width="450" height="auto"/>
-      </div>
-      <Info >
-        <Button className={activeTab === "instructions" ? "active" : ""} onClick={()=> setActiveTab("instructions")}>Instructions</Button>
-        <Button className={activeTab === "ingredients" ? "active" : ""} onClick={()=> setActiveTab("ingredients")}>Ingredients</Button>
-        {
-        activeTab === "instructions" && editTab === "save" ? (
-          <div>     
-          <span>{details.instructions}</span>
-        </div>
-        ) : activeTab === "instructions" && editTab === "edit" ? (
-        <>
-        
-        <div className="textArea">
-        <textarea data-type='text' value={instructions!} placeholder={details.instructions} maxLength= {2000} onChange={e => setInstructions(e.target.value)}></textarea>
-       </div>
-        
-        </>
-        ) 
-        : 
-        activeTab === "ingredients" && editTab === "save" ? (
-          
           <div>
-            <>
-          <span>{details.ingredients}</span>
-          {/* {details.ingredients.map((ingredient)=> {
-            return <p key={ingredient.id}>- {ingredient.name}</p>
-            
-          })} */}
-          {console.log(details.ingredients)}
-          
-          
-            </>
+            <img src={details.image} alt="" width="450" height="auto"/>
           </div>
-        ) : activeTab === "ingredients" && editTab === "edit" ? (
-          
-          <div className="textArea">
-            <textarea data-type="text" value={ingredients!} placeholder={details.ingredients} maxLength= {2000} onChange={e => setIngredients(e.target.value)}></textarea>
-        </div>
-        ) : (console.log("hi fe"))}
-        <br/>
-        
-        <UpdateButtons  onClick={()=> setEditTab("edit")}>Edit</UpdateButtons>
-        <UpdateButtons  onClick={()=> onSubmit()}>Save</UpdateButtons>
-        
-        
-      </Info>
+          <Info >
+            {
+            //ternary operator which dictates the information displayed based on the state of the activeTab an editTab
+            activeKey === "1" && editTab === "save" ? 
+            (
+              <div>     
+              <Tabs defaultActiveKey="1" items={items} onChange={onChange} activeKey={activeKey}/>
+              </div>
+            ) 
+            : activeKey === "1" && editTab === "edit" ? 
+            (
+              <>
+              <div className="textArea">
+              <textarea data-type='text' value={instructions!} placeholder={details.instructions} maxLength= {2000} onChange={e => setInstructions(e.target.value)}></textarea>
+              </div>
+              </>
+            ) 
+            : activeKey === "2" && editTab === "save" ? 
+            (
+              
+                <>
+              <Tabs defaultActiveKey="1" items={items} onChange={onChange} activeKey={activeKey}/>        
+                </>
+              
+            ) 
+            : activeKey === "2" && editTab === "edit" ? (
+              
+              <div className="textArea">
+                <textarea data-type="text" value={ingredients!} placeholder={details.ingredients} maxLength= {2000} onChange={e => setIngredients(e.target.value)}></textarea>
+              </div>
+            ) 
+            : (
+              console.log("nothing selected!")
+              )
+              //end of ternary operator
+            }
+            <ButtonSection>
+              <Button onClick={()=> setEditTab("edit")} shape={'round'} size={'large'} style={{
+                marginRight: '1rem'
+              }}> Edit </Button>
+              <Button  onClick={()=> onSubmit()} shape={'round'} size={'large'} style={{
+                marginRight: '1rem'
+              }}> Save </Button>
+              <Button  onClick={()=> setEditTab("save")} shape={'round'} size={'large'}> Cancel</Button>
+            </ButtonSection>
+            
+          </Info>
     </DetailWrapper>
- 
-    
+   
     </div>
   )
 }
@@ -185,8 +215,8 @@ textarea {
   width: 380px;
   height: 250px;
   resize: none;
-  white-space: pre;
-overflow-wrap: break-word;
+  
+  overflow-wrap: break-word;
   
 }
 
@@ -197,48 +227,17 @@ span {
 }
 
 
-`;
-
-const Button : any = styled.button`
-  padding: 1rem 2rem;
-  color: #313131;
-  background: white;
-  border: 2px solid black;
-  justify-content: center;
-  margin-right: 0.7rem;
-  border-radius: 1.5rem;
- 
-  font-weight: 600;
-  font-size: 20px;
-  
-  
-  
-
 `
-const UpdateButtons : any = styled.button`
-  padding: 1rem 2rem;
-  color: #313131;
-  background: white;
-  border: 2px solid black;
-  display: inline;
-  border-radius: 1.5rem;
-  font-weight: 600;
-  font-size: 20px;
-  margin-right: 10rem;
-`
+
 
 const Info : any = styled.div`
 margin-top: 0rem;
 margin-left: 10rem;
-justify-content: center;
 
-div {
-  margin-top: 2rem;
-  
-  
-}
+`
 
-
+const ButtonSection : any = styled.div`
+  margin-top: 1rem;
 `
 
 

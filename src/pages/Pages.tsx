@@ -1,24 +1,27 @@
 import React from "react";
 import Home from "./Home";
 import {Route, Routes, useLocation} from 'react-router-dom'
-import DishType from "./DishType";
-import Searched from "./Searched";
+import CatResults from "../components/CatResults";
+import Searched from "./SearchResults";
 import Recipe from "./Recipe";
 import { AnimatePresence } from "framer-motion";
 import Cookbook from "./Cookbook";
-import Category from "../components/Category";
-const Pages = () => {
+import Categories from "./Categories";
+
+const Pages = ({backendUrl}: {backendUrl: any}) => {
+  
+  //use this variable to get the current url address
   const location = useLocation();
   
   return (
     <AnimatePresence exitBeforeEnter>  
     <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/cookbook" element={<Cookbook/>}/>
-        <Route path="/category" element={<Category/>}/>
-        <Route path="/recipes/category/:dishType" element={<DishType/>}/>
-        <Route path="/recipes/searched/:search" element={<Searched/>}/>
-        <Route path="/recipes/:id" element={<Recipe/>}/>
+        <Route path="/" element={<Home backendUrl={backendUrl}/>}/>
+        <Route path="/cookbook" element={<Cookbook backendUrl={backendUrl}/>}/>
+        <Route path="/category" element={<Categories/>}/>
+        <Route path="/recipes/category/:dishType" element={<CatResults backendUrl={backendUrl}/>}/>
+        <Route path="/recipes/searched/:search" element={<Searched backendUrl={backendUrl}/>}/>
+        <Route path="/recipes/:id" element={<Recipe backendUrl={backendUrl}/>}/>
     </Routes>
     </AnimatePresence>
     

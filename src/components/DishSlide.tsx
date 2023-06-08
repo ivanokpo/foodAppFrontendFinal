@@ -1,17 +1,24 @@
-import React, { useEffect, useState, useRef} from 'react'
+import React, { useEffect, useState} from 'react'
 import styled from 'styled-components';
 import {Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
 import { Link} from 'react-router-dom';
+import { Alert } from 'antd';
+
 
  
 
+//class for home pages dish slide, showing saved recipes
+const DishSlide = ({backendUrl}: {backendUrl: any}) => {
+    
+    //state for recipe data
+    const [recipeData, setRecipeData]= useState<DataObject | undefined[]>([]);
+    
+    const [deleted,setDeleted] = useState<string | null >('no');
 
-const Popular = () => {
+ 
 
-    const effectRan = useRef(false)
-    const [popular, setPopular]= useState<DataObject | undefined[]>([]);
-    const baseUrl = 'http://localhost:3001/recipes';  
+    //data object for recipe object recieved from backend
     type DataObject = {
         id: string
         title: string
@@ -19,47 +26,39 @@ const Popular = () => {
 
     }[]
 
+    //method for getting recipes from backend 
+    const getRecipes = async ()  => {
+        const api = await fetch(`${backendUrl}/all`);
+        const recipeBackendData = await api.json();
+        localStorage.setItem('dishSlide', JSON.stringify(recipeBackendData));
+        setRecipeData(recipeBackendData.data);
+        }
+    
+    //method that calls the getRecipes() method every time the component renders
     useEffect(() => {
-       
-        if (!effectRan.current){
-            const getPopular = async ()  => {
-                const api = await fetch(`${baseUrl}/all`);
-                const data = await api.json();
-                localStorage.setItem('popular', JSON.stringify(data));
-                console.log(data.data);
-                setPopular(data.data);
-                
-                }
-            getPopular()
-            console.log("mount")
-        }
-
-        return () => {
-          
-            localStorage.clear()
-                
-                setPopular([]);
-        }
-        
+        getRecipes()
     }, [])
 
+    //method to delete item from database, sending a delete http request
     const handleDelete = async (id: string | undefined) => {
-        console.log("delete");
-        const url = `${baseUrl}/delete/${id}`
+        setDeleted('yes');
+        const url = `${backendUrl}/delete/${id}`
         fetch(url, {method: 'DELETE'}).then((response) => {
             if(!response.ok){
                 throw new Error('Something went wrong')
             }
-            
-            // assume things went well ^ 
         }).catch((e) => {console.log(e)});
+        window.location.reload();
+
+
+
     }
 
   return (
+      <>
     <div>
                 <Wrapper >
                     <h3>Saved Recipes</h3>
-
                     <Splide options={{
                         perPage: 4,
                         arrows: false,
@@ -67,44 +66,34 @@ const Popular = () => {
                         drag: 'free',
                         gap: '5rem'
                     }}>
-                    {popular.map((recipe) => {
+                    {recipeData.map((recipe) => {
                         return(
                             <SplideSlide key={recipe?.id}>
-                                
-                            
-                            <Card key={recipe?.id}> 
-                            
-                            
-                            
-                            <p key={recipe?.id}>{recipe?.title}</p>
-                            
-                            <img src={recipe?.image}  alt={recipe?.title} width="200" height="auto"/>
-                            <Link to={'/recipes/' + recipe?.id}>
-                                
-                                <Gradient/> 
-                            </Link>
-                         
-                            
-                            </Card>
-
+                                <Card key={recipe?.id}> 
+                                    <p key={recipe?.id}>{recipe?.title}</p>
+                                    <img src={recipe?.image}  alt={recipe?.title} width="200" height="auto"/>
+                                    <Link to={'/recipes/' + recipe?.id}> 
+                                        <Gradient/> 
+                                    </Link>
+                                </Card>
                             <DeleteButton onClick={() => handleDelete(recipe?.id)}>
-                            <div>
-                            
+                            <div className="deleteIcon">
                             </div>
                             </DeleteButton>
-                            
                             </SplideSlide>
                         )
                     })}
                     </Splide>
                 </Wrapper>
-            
-        
     </div>
+    {deleted === 'yes' ? (<Alert message="Recipe deleted!" type="error" />) : (<></>)}
+    </>
   )
 }
 
-const Wrapper = styled.div`margin: 4rem 0rem`
+const Wrapper = styled.div`
+    padding: 1rem;
+`
 
 const DeleteButton = styled.button`
 
@@ -168,4 +157,4 @@ width: 100%;
 height: 100%;
 background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.5));
 `
-export default Popular
+export default DishSlide

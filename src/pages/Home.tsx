@@ -1,9 +1,10 @@
-import Popular from "../components/DishSlide";
+import DishSlide from "../components/DishSlide";
 import {motion} from 'framer-motion';
 
 import React from 'react'
 
-const Home = () => {
+//class where home page main design is made
+const Home = ({backendUrl}: {backendUrl: any}) => {
   return (
     <motion.div
     animate={{opacity: 1}}
@@ -12,7 +13,7 @@ const Home = () => {
     transition={{duration: 0.5}}
     >
         
-        <Popular/>
+        <DishSlide backendUrl={backendUrl}/>
     </motion.div>
   )
 }

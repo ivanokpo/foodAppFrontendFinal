@@ -9,14 +9,16 @@ import {  faBowlRice, faCheese } from '@fortawesome/free-solid-svg-icons'
 
 import React from 'react'
 
-function Category() {
+//class where the different category icons are instantiated, 
+//taking the user to their requested category of recipes
+const Category = () => {
   return (
     <List>
         <SLink to={'/recipes/category/soup'}>
             <TbSoup/>
             <h4>Soup</h4>
         </SLink>
-        <SLink to={'/recipes/category/burgers'}>
+        <SLink to={'/recipes/category/burger'}>
             <FaHamburger/>
             <h4>Burgers</h4>
         </SLink>

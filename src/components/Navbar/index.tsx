@@ -1,7 +1,10 @@
 import React from 'react'
 import { Nav, NavLink} from './NavbarElements'
 import {GiCook} from 'react-icons/gi'
-function Navbar() {
+const Navbar = () => {
+  //Navbar component which returns the navbar along with the three different main pages
+  //Home, Cookbook and Categories
+  //The three pages are navlinks which redirect you to the pages 
   return (
     <>
        <Nav>
@@ -13,7 +16,7 @@ function Navbar() {
                     Cookbook
                 </NavLink>
                 <NavLink to="/category" >
-                    Category
+                    Categories
                 </NavLink>
                 
             

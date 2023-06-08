@@ -1,10 +1,10 @@
 import React from 'react'
 import AddRecipe from '../components/AddRecipe'
 
-const Cookbook = () => {
+//class for cookbook page
+const Cookbook = ({backendUrl}: {backendUrl: any}) => {
   return (
-    
-    <AddRecipe/>
+    <AddRecipe backendUrl={backendUrl}/>
   )
 }
 

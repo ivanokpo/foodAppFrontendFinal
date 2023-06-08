@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import {NavLink as Link} from 'react-router-dom'
 import {FaBars} from 'react-icons/fa'
 
+//styled components to style the components in the Navbar, 
+//this includes but is not limited to the spacing, text and color
 export const Nav= styled.nav`
     background: linear-gradient(35deg, #494949, #313131);
     height: 80px;
